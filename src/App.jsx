@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ContactPage from './pages/ContactPage';
 import WelcomePage from './pages/WelcomePage';
+import HomePage from './pages/HomePage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('welcome');
@@ -34,30 +35,30 @@ function App() {
     switch (currentPage) {
       case 'login':
         return (
-          <LoginPage 
+          <LoginPage
             onSwitchToSignup={() => setCurrentPage('signup')}
             onLogin={handleLogin}
           />
         );
-      
+
       case 'signup':
         return (
-          <SignupPage 
+          <SignupPage
             onSwitchToLogin={() => setCurrentPage('login')}
             onSignup={handleSignup}
           />
         );
-      
+
       case 'contact':
         return (
-          <ContactPage 
+          <ContactPage
             onBack={() => setCurrentPage(user ? 'welcome' : 'login')}
           />
         );
-      
+
       case 'welcome':
         return (
-          <WelcomePage 
+          <WelcomePage
             user={user}
             onLogout={handleLogout}
             onContact={() => setCurrentPage('contact')}
@@ -65,8 +66,17 @@ function App() {
             onGoToSignup={() => setCurrentPage('signup')}
           />
         );
-      
-      
+
+      case 'home':
+        return (
+          <HomePage
+            user={user}
+            onLogout={handleLogout}
+            onContact={() => setCurrentPage('contact')}
+            onGoToLogin={() => setCurrentPage('login')}
+            onGoToSignup={() => setCurrentPage('signup')}
+          />
+        );
       default:
         return (
           <LoginPage
@@ -79,25 +89,25 @@ function App() {
 
   const isLoggedIn = user !== null;
 
-  const fullLayoutPages = ['login', 'welcome', 'signup'];
+  const fullLayoutPages = ['login', 'welcome', 'signup', 'home'];
   const showFullLayout = fullLayoutPages.includes(currentPage);
 
   return (
     <div className="min-h-screen bg-hotel-dark flex flex-col">
-      
+
       {showFullLayout && (
-        <Navbar 
+        <Navbar
           isLoggedIn={isLoggedIn}
           onLogout={handleLogout}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
       )}
-      
+
       <main className={showFullLayout ? 'pt-20 flex-grow' : 'flex-grow'}>
         {renderPage()}
       </main>
-      
+
       {showFullLayout && (
         <Footer onNavigate={handleNavigation} />
       )}

@@ -1,21 +1,21 @@
-import { useState } from 'react'; 
+import { useState } from 'react';
 
 function LoginPage({ onSwitchToSignup, onLogin }) {
 
   const [email, setEmail] = useState('');
-  
+
   const [password, setPassword] = useState('');
-  
+
   const [errors, setErrors] = useState({});
 
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
-    const newErrors = {}; 
-    
+    const newErrors = {};
+
     if (!email.trim()) {
-      newErrors.email = 'Email is required'; 
-    } 
+      newErrors.email = 'Email is required';
+    }
     else if (!email.includes('@')) {
       newErrors.email = 'Please enter a valid email address';
     }
@@ -25,38 +25,38 @@ function LoginPage({ onSwitchToSignup, onLogin }) {
     else if (password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (validateForm()) {
       setIsLoading(true);
-      
+
       setTimeout(() => {
-        onLogin({ email, password });  
-        setIsLoading(false); 
+        onLogin({ email, password });
+        setIsLoading(false);
       }, 2000);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-hotel-dark p-4 pt-20">
-      
+
       {/* Background Image - Hotel photo */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center opacity-20"
         style={{
           backgroundImage: 'url(https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80)'
         }}
       />
-      
+
       {/* Content Wrapper */}
       <div className="relative z-10 w-full max-w-md">
-        
+
         {/* Logo and Title */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-serif text-hotel-gold tracking-wider">
@@ -69,7 +69,7 @@ function LoginPage({ onSwitchToSignup, onLogin }) {
 
         {/* Login Form Card */}
         <div className="bg-hotel-charcoal/90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-hotel-gold/20">
-          
+
           {/* Page Title */}
           <h2 className="text-3xl font-serif text-hotel-cream text-center mb-2">
             Welcome Back
@@ -80,7 +80,7 @@ function LoginPage({ onSwitchToSignup, onLogin }) {
 
           {/* THE LOGIN FORM */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            
+
             <div>
               <label className="block text-hotel-cream text-sm font-medium mb-2">
                 Email Address
@@ -104,9 +104,9 @@ function LoginPage({ onSwitchToSignup, onLogin }) {
                 Password
               </label>
               <input
-                type="password"  
+                type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)} 
+                onChange={(e) => setPassword(e.target.value)}
                 className={`w-full px-4 py-3 bg-hotel-dark/50 border rounded-lg 
                   text-hotel-cream placeholder-gray-500 focus:outline-none 
                   focus:ring-2 focus:ring-hotel-gold/50 focus:border-hotel-gold
@@ -119,8 +119,8 @@ function LoginPage({ onSwitchToSignup, onLogin }) {
             </div>
             <div className="flex items-center justify-between">
               <label className="flex items-center cursor-pointer">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   className="w-4 h-4 rounded border-gray-600 text-hotel-gold focus:ring-hotel-gold bg-hotel-dark/50"
                 />
                 <span className="ml-2 text-gray-400 text-sm">Remember me</span>
@@ -131,8 +131,8 @@ function LoginPage({ onSwitchToSignup, onLogin }) {
               </a>
             </div>
             <button
-              type="submit"  
-              disabled={isLoading}  
+              type="submit"
+              disabled={isLoading}
               className="w-full py-3 px-4 bg-hotel-gold text-hotel-dark font-semibold 
                 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 
                 focus:ring-hotel-gold focus:ring-offset-2 focus:ring-offset-hotel-dark
