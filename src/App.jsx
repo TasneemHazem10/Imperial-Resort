@@ -7,9 +7,13 @@ import SignupPage from './pages/SignupPage';
 import ContactPage from './pages/ContactPage';
 import WelcomePage from './pages/WelcomePage';
 import HomePage from './pages/HomePage';
+import BookingDetailsPage from './pages/BookingDetails';
+import CheckoutPage from './pages/CheckoutPage';
+import { deluxeRoom, seaViewRoom, doubleRoom } from "./data/RoomData";
+
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('welcome');
+  const [currentPage, setCurrentPage] = useState('listings');
   const [user, setUser] = useState(null);
 
   const handleLogin = (userData) => {
@@ -34,67 +38,41 @@ function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'login':
-        return (
-          <LoginPage
-            onSwitchToSignup={() => setCurrentPage('signup')}
-            onLogin={handleLogin}
-          />
-        );
-
+        return <LoginPage onSwitchToSignup={() => setCurrentPage('signup')} onLogin={handleLogin} />;
       case 'signup':
-        return (
-          <SignupPage
-            onSwitchToLogin={() => setCurrentPage('login')}
-            onSignup={handleSignup}
-          />
-        );
-
+        return <SignupPage onSwitchToLogin={() => setCurrentPage('login')} onSignup={handleSignup} />;
       case 'contact':
-        return (
-          <ContactPage
-            onBack={() => setCurrentPage(user ? 'welcome' : 'login')}
-          />
-        );
-
+        return <ContactPage onBack={() => setCurrentPage(user ? 'welcome' : 'login')} />;
       case 'welcome':
-        return (
-          <WelcomePage
-            user={user}
-            onLogout={handleLogout}
-            onContact={() => setCurrentPage('contact')}
-            onGoToLogin={() => setCurrentPage('login')}
-            onGoToSignup={() => setCurrentPage('signup')}
-          />
-        );
-
+        return <WelcomePage user={user} onLogout={handleLogout} onContact={() => setCurrentPage('contact')} />;
       case 'home':
-        return (
-          <HomePage
-            user={user}
-            onLogout={handleLogout}
-            onContact={() => setCurrentPage('contact')}
-            onGoToLogin={() => setCurrentPage('login')}
-            onGoToSignup={() => setCurrentPage('signup')}
-          />
-        );
+        return <HomePage user={user} onLogout={handleLogout} onContact={() => setCurrentPage('contact')} />;
+
+      case "deluxe-room":
+        return <BookingDetailsPage room={deluxeRoom} setCurrentPage={setCurrentPage} />;
+      case "sea-view-room":
+        return <BookingDetailsPage room={seaViewRoom} setCurrentPage={setCurrentPage} />;
+      case "double-room":
+        return <BookingDetailsPage room={doubleRoom} setCurrentPage={setCurrentPage} />;
+
+      case "checkout":
+        return <CheckoutPage onBack={() => setCurrentPage("listings")} />;
+
       default:
-        return (
-          <LoginPage
-            onSwitchToSignup={() => setCurrentPage('signup')}
-            onLogin={handleLogin}
-          />
-        );
+        return <LoginPage onSwitchToSignup={() => setCurrentPage('signup')} onLogin={handleLogin} />;
     }
   };
 
   const isLoggedIn = user !== null;
 
-  const fullLayoutPages = ['login', 'welcome', 'signup', 'home'];
+  const fullLayoutPages = [
+    'login','welcome','signup','home',
+    'deluxe-room','sea-view-room','double-room','checkout'
+  ];
   const showFullLayout = fullLayoutPages.includes(currentPage);
 
   return (
     <div className="min-h-screen bg-hotel-dark flex flex-col">
-
       {showFullLayout && (
         <Navbar
           isLoggedIn={isLoggedIn}
@@ -103,14 +81,10 @@ function App() {
           setCurrentPage={setCurrentPage}
         />
       )}
-
       <main className={showFullLayout ? 'pt-20 flex-grow' : 'flex-grow'}>
         {renderPage()}
       </main>
-
-      {showFullLayout && (
-        <Footer onNavigate={handleNavigation} />
-      )}
+      {showFullLayout && <Footer onNavigate={handleNavigation} />}
     </div>
   );
 }
