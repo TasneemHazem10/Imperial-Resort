@@ -64,6 +64,7 @@ function App() {
             onContact={() => setCurrentPage('contact')}
             onGoToLogin={() => setCurrentPage('login')}
             onGoToSignup={() => setCurrentPage('signup')}
+            onGoToHome={() => setCurrentPage('home')}
           />
         );
 

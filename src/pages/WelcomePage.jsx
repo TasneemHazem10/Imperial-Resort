@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-function WelcomePage({ user, onLogout, onContact, onGoToLogin, onGoToSignup }) {
+function WelcomePage({ user, onLogout, onContact, onGoToLogin, onGoToSignup, onGoToHome }) {
   const [showDetails, setShowDetails] = useState(false);
 
 
@@ -39,8 +39,14 @@ function WelcomePage({ user, onLogout, onContact, onGoToLogin, onGoToSignup }) {
             {user ? (
               <>
                 <button
-                  onClick={onContact}
+                  onClick={onGoToHome}
                   className="px-8 py-3 bg-hotel-gold text-hotel-dark font-semibold rounded-lg hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-hotel-gold focus:ring-offset-2 focus:ring-offset-hotel-charcoal transition-all duration-300"
+                >
+                  Explore Resort
+                </button>
+                <button
+                  onClick={onContact}
+                  className="px-8 py-3 border-2 border-hotel-gold text-hotel-gold font-semibold rounded-lg hover:bg-hotel-gold/10 focus:outline-none focus:ring-2 focus:ring-hotel-gold focus:ring-offset-2 focus:ring-offset-hotel-charcoal transition-all duration-300"
                 >
                   Contact Us
                 </button>
