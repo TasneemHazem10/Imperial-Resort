@@ -45,6 +45,17 @@ function App() {
         return <ContactPage onBack={() => setCurrentPage(user ? 'welcome' : 'login')} />;
       case 'welcome':
         return <WelcomePage user={user} onLogout={handleLogout} onContact={() => setCurrentPage('contact')} />;
+        return (
+          <WelcomePage
+            user={user}
+            onLogout={handleLogout}
+            onContact={() => setCurrentPage('contact')}
+            onGoToLogin={() => setCurrentPage('login')}
+            onGoToSignup={() => setCurrentPage('signup')}
+            onGoToHome={() => setCurrentPage('home')}
+          />
+        ); 
+
       case 'home':
         return <HomePage user={user} onLogout={handleLogout} onContact={() => setCurrentPage('contact')} />;
 
