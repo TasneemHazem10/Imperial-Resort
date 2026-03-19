@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LoginPage from './pages/LoginPage';
@@ -7,6 +7,8 @@ import SignupPage from './pages/SignupPage';
 import ContactPage from './pages/ContactPage';
 import WelcomePage from './pages/WelcomePage';
 import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
+import SearchResultsPage from './pages/SearchResultsPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('welcome');
@@ -64,7 +66,9 @@ function App() {
             onContact={() => setCurrentPage('contact')}
             onGoToLogin={() => setCurrentPage('login')}
             onGoToSignup={() => setCurrentPage('signup')}
-            onGoToHome={() => setCurrentPage('home')}
+            onGoToHome={() => setCurrentPage('home')
+              
+            }
           />
         );
 
@@ -77,6 +81,10 @@ function App() {
             onGoToLogin={() => setCurrentPage('login')}
             onGoToSignup={() => setCurrentPage('signup')}
           />
+        );
+      case 'profile':
+        return(
+          <ProfilePage />
         );
       default:
         return (
@@ -112,6 +120,17 @@ function App() {
       {showFullLayout && (
         <Footer onNavigate={handleNavigation} />
       )}
+    
+     <BrowserRouter>
+     <Navbar />
+      <Routes>
+        <Route path="/" element={<SearchResultsPage />} />
+        <Route path="/search-results" element={<SearchResultsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+
     </div>
   );
 }

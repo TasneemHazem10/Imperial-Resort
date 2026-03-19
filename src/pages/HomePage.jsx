@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage({ onLogout }) {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('adventure');
     const [selectedAccomodation, setSelectedAccomodation] = useState(null);
+    const [date, setDate] = useState('');
+    const [type, setType] = useState('');
+    const [guests, setGuests] = useState(0);
+
 
     const categoryImages = {
         adventure: [
@@ -27,7 +32,11 @@ function HomePage({ onLogout }) {
             'https://images.unsplash.com/photo-1676288176918-232f7caadfee?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
         ]
     };
-
+const navigate = useNavigate();
+    const handleBooking = (b) => {
+        b.preventDefault();
+        navigate(`/search-results?date=${date}&type=${type}&guests=${guests}`);
+    };
     const accomodationDesc = {
         adventure: [
             ["Adventure Accommodation 1", "This is a description for the adventure accommodation 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."],
@@ -66,27 +75,26 @@ function HomePage({ onLogout }) {
                         <div className="flex flex-wrap gap-20 mb-4">
                             <div className="flex-1 w-full mb-6 text-1xl font-serif text-hotel-gold tracking-wider">
                                 <p>DATE</p>
-                                <input type="date" className="w-full p-2 rounded-md bg-hotel-dark/50 text-hotel-cream focus:outline-none focus:ring-2 focus:ring-hotel-gold" />
+                                <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full p-2 rounded-md bg-hotel-dark/50 text-hotel-cream focus:outline-none focus:ring-2 focus:ring-hotel-gold" />
                             </div>
                             <div className="flex-1 mb-6 text-1xl font-serif text-hotel-gold tracking-wider">
                                 <p>TYPE</p>
-                                <select className="p-2 w-full rounded-md bg-hotel-dark/50 text-hotel-cream focus:outline-none focus:ring-2 focus:ring-hotel-gold">
+                                <select value={type} onChange={e => setType(e.target.value)} className="p-2 w-full rounded-md bg-hotel-dark/50 text-hotel-cream focus:outline-none focus:ring-2 focus:ring-hotel-gold">
                                     <option value="">Select Room Type</option>
-                                    <option value="standard">Standard Room</option>
-                                    <option value="deluxe">Deluxe Room</option>
-                                    <option value="suite">Suite</option>
-                                    <option value="presidential">Presidential Suite</option>
-                                    <option value="apartment">Apartment</option>
-                                    <option value="villa">Villa</option>
-                                    <option value="penthouse">Penthouse</option>
-                                    <option value="bungalow">Bungalow</option>
+                                    <option value="Single Room">Single Room</option>
+                                    <option value="Double Room">Double Room</option>
+                                    <option value="Triple Room">Triple Room</option>
+                                    <option value="Suite">Suite</option>
+                                    <option value="Deluxe Room">Deluxe Room</option>
+                                    <option value="Connected Room">Connected Room</option>
+                                    <option value="Double-seaView Room">Double-seaView Room</option>
                                 </select>
                             </div>
                             <div className="flex-1 w-full mb-6 text-1xl font-serif text-hotel-gold tracking-wider">
                                 <p>GUESTS</p>
-                                <input defaultValue="0" type="number" min="0" className="w-full p-2 rounded-md bg-hotel-dark/50 text-hotel-cream focus:outline-none focus:ring-2 focus:ring-hotel-gold" />
+                                <input value={guests} onChange={e => setGuests(e.target.value)} type="number" min="0" className="w-full p-2 rounded-md bg-hotel-dark/50 text-hotel-cream focus:outline-none focus:ring-2 focus:ring-hotel-gold" />
                             </div>
-                            <button type="submit" className="flex-1 mb-6 mt-4 py-2 bg-hotel-gold text-hotel-dark rounded-md hover:bg-hotel-gold/90 transition-colors" /*onClick={ Navigate to booking results}*/>
+                            <button type="submit" className="flex-1 mb-6 mt-4 py-2 bg-hotel-gold text-hotel-dark rounded-md hover:bg-hotel-gold/90 transition-colors" /*onClick={ Navigate to booking results}*/ onClick={handleBooking}>
                                 Booking &nbsp; &nbsp; &gt;
                             </button>
                         </div>
